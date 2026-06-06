@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easy-tools — Quick tools that are life changers</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --accent: #7c6fff;
+    --accent2: #b8b0ff;
+    --text: #f0eeff;
+    --muted: #8884a8;
+    --success: #4ade80;
+    --radius: 16px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Ambient background glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(124,111,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .logo span {
+    color: var(--accent);
+  }
+
+  .nav-badge {
+    font-size: 0.7rem;
+    background: rgba(124,111,255,0.2);
+    color: var(--accent2);
+    border: 1px solid rgba(124,111,255,0.3);
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--accent2);
+    border: 1px solid rgba(124,111,255,0.3);
+    background: rgba(124,111,255,0.08);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 1.25rem;
+  }
+
+  h1 .highlight {
+    background: linear-gradient(135deg, #7c6fff, #b8b0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+  }
+
+  /* TOOL SECTION */
+  .tool-section {
+    position: relative;
+    z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+  }
+
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .tool-card:hover {
+    border-color: var(--border2);
+  }
+
+  .tool-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .tool-icon {
+    width: 42px;
+    height: 42px;
+    background: rgba(124,111,255,0.15);
+    border: 1px solid rgba(124,111,255,0.25);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .tool-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .tool-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .tool-body {
+    padding: 2rem;
+  }
+
+  /* DROP ZONE */
+  .drop-zone {
+    border: 2px dashed rgba(124,111,255,0.3);
+    border-radius: var(--radius);
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: rgba(124,111,255,0.03);
+    position: relative;
+  }
+
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--accent);
+    background: rgba(124,111,255,0.07);
+  }
+
+  .drop-zone input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+
+  .drop-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1rem;
+    background: rgba(124,111,255,0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+  }
+
+  .drop-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .drop-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .drop-sub strong {
+    color: var(--accent2);
+    font-weight: 500;
+  }
+
+  /* PREVIEW */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 560px) {
+    .preview-grid { grid-template-columns: 1fr; }
+  }
+
+  .preview-box {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .preview-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .preview-img-wrap {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: repeating-conic-gradient(rgba(255,255,255,0.04) 0% 25%, transparent 0% 50%);
+    background-size: 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-img-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: none;
+  }
+
+  .preview-placeholder {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  /* BUTTON */
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.7rem 1.4rem;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: #9d94ff;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border2);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background: rgba(255,255,255,0.07);
+  }
+
+  .btn-secondary:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .btn-download {
+    background: rgba(74,222,128,0.12);
+    color: var(--success);
+    border: 1px solid rgba(74,222,128,0.25);
+    display: none;
+  }
+
+  .btn-download:hover {
+    background: rgba(74,222,128,0.2);
+  }
+
+  /* STATUS / LOADING */
+  .status-bar {
+    margin-top: 1.2rem;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .status-bar.loading {
+    background: rgba(124,111,255,0.1);
+    border: 1px solid rgba(124,111,255,0.2);
+    color: var(--accent2);
+    display: flex;
+  }
+
+  .status-bar.success {
+    background: rgba(74,222,128,0.08);
+    border: 1px solid rgba(74,222,128,0.2);
+    color: var(--success);
+    display: flex;
+  }
+
+  .status-bar.error {
+    background: rgba(248,113,113,0.08);
+    border: 1px solid rgba(248,113,113,0.2);
+    color: #f87171;
+    display: flex;
+  }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(124,111,255,0.3);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* API KEY NOTICE */
+  .api-notice {
+    background: rgba(251,191,36,0.07);
+    border: 1px solid rgba(251,191,36,0.2);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    font-size: 0.83rem;
+    color: #fbbf24;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .api-notice a {
+    color: #fcd34d;
+    text-decoration: underline;
+  }
+
+  /* API KEY INPUT */
+  .api-key-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .api-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .api-input:focus {
+    border-color: var(--accent);
+  }
+
+  .api-input::placeholder {
+    color: var(--muted);
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer a {
+    color: var(--accent2);
+    text-decoration: none;
+  }
+
+  /* COMING SOON CARDS */
+  .coming-soon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    max-width: 780px;
+    margin: 0 auto 4rem;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .coming-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.2rem 1.4rem;
+    opacity: 0.6;
+  }
+
+  .coming-card-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .coming-card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  .coming-card-sub { font-size: 0.78rem; color: var(--muted); }
+
+  .section-label {
+    text-align: center;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Easy<span>-tools</span></div>
+  <span class="nav-badge">Beta</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Quick tools that are life changers</div>
+  <h1>Remove <span class="highlight">backgrounds</span><br>in seconds</h1>
+  <p class="hero-sub">Upload any image and get a clean, transparent PNG — no Photoshop, no design skills needed.</p>
+</section>
+
+<section class="tool-section">
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon">✂️</div>
+      <div>
+        <div class="tool-title">Background Remover</div>
+        <div class="tool-desc">Powered by remove.bg API — free plan available</div>
+      </div>
+    </div>
+    <div class="tool-body">
+
+      <div class="api-notice">
+        <span>⚠️</span>
+        <span>This tool uses the <strong>remove.bg</strong> API. Get a free API key (50 images/month) at <a href="https://www.remove.bg/api" target="_blank">remove.bg/api</a>, then paste it below.</span>
+      </div>
+
+      <div class="api-key-row">
+        <input class="api-input" type="password" id="apiKey" placeholder="Paste your remove.bg API key here…" />
+        <button class="btn btn-secondary" onclick="saveKey()">Save</button>
+      </div>
+
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*" onchange="handleFile(this.files[0])">
+        <div class="drop-icon">🖼️</div>
+        <div class="drop-title">Drop your image here</div>
+        <div class="drop-sub">or <strong>click to browse</strong> · PNG, JPG, WEBP up to 12MB</div>
+      </div>
+
+      <div class="preview-grid" id="previewGrid" style="display:none">
+        <div class="preview-box">
+          <div class="preview-label">Original</div>
+          <div class="preview-img-wrap">
+            <img id="originalImg" alt="Original image">
+          </div>
+        </div>
+        <div class="preview-box">
+          <div class="preview-label">No background</div>
+          <div class="preview-img-wrap">
+            <img id="resultImg" alt="Result image">
+            <div class="preview-placeholder" id="resultPlaceholder">Result will appear here</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-bar" id="statusBar">
+        <div class="spinner" id="spinner"></div>
+        <span id="statusText"></span>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="removeBtn" onclick="removeBackground()" disabled>✂️ Remove Background</button>
+        <button class="btn btn-secondary" id="resetBtn" onclick="resetTool()" disabled>↺ Reset</button>
+        <a class="btn btn-download" id="downloadBtn" download="no-background.png">⬇️ Download PNG</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<p class="section-label">More tools coming soon</p>
+<div class="coming-soon-grid">
+  <div class="coming-card">
+    <div class="coming-card-icon">🎵</div>
+    <div class="coming-card-title">Audio Converter</div>
+    <div class="coming-card-sub">MP3, WAV, OGG and more</div>
+  </div>
+  <div class="coming-card">
+    <div class="coming-card-icon">📄</div>
+    <div class="coming-card-title">Image Resizer</div>
+    <div class="coming-card-sub">Resize & compress in bulk</div>
+  </div>
+  <div class="coming-card">
+    <div class="coming-card-icon">🎨</div>
+    <div class="coming-card-title">Color Picker</div>
+    <div class="coming-card-sub">Extract palettes from images</div>
+  </div>
+</div>
+
+<footer>
+  Made with ❤️ by <a href="https://github.com/Sydronne" target="_blank">Sydronne</a> · Easy-tools is in beta
+</footer>
+
+<script>
+  let currentFile = null;
+
+  // Load saved API key
+  window.addEventListener('load', () => {
+    const saved = localStorage.getItem('removebg_key');
+    if (saved) document.getElementById('apiKey').value = saved;
+  });
+
+  function saveKey() {
+    const key = document.getElementById('apiKey').value.trim();
+    if (key) {
+      localStorage.setItem('removebg_key', key);
+      showStatus('success', '✓ API key saved!');
+      setTimeout(() => hideStatus(), 2000);
+    }
+  }
+
+  // Drag & drop
+  const dropZone = document.getElementById('dropZone');
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) handleFile(file);
+  });
+
+  function handleFile(file) {
+    if (!file) return;
+    currentFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('originalImg').src = e.target.result;
+      document.getElementById('originalImg').style.display = 'block';
+      document.getElementById('previewGrid').style.display = 'grid';
+      document.getElementById('resultImg').style.display = 'none';
+      document.getElementById('resultPlaceholder').style.display = 'block';
+      document.getElementById('removeBtn').disabled = false;
+      document.getElementById('resetBtn').disabled = false;
+      document.getElementById('downloadBtn').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function removeBackground() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if (!apiKey) {
+      showStatus('error', '⚠️ Please enter your remove.bg API key above first.');
+      return;
+    }
+    if (!currentFile) {
+      showStatus('error', '⚠️ Please upload an image first.');
+      return;
+    }
+
+    document.getElementById('removeBtn').disabled = true;
+    showStatus('loading', 'Removing background — this usually takes a few seconds…');
+
+    const formData = new FormData();
+    formData.append('image_file', currentFile);
+    formData.append('size', 'auto');
+
+    try {
+      const res = await fetch('https://api.remove.bg/v1.0/removebg', {
+        method: 'POST',
+        headers: { 'X-Api-Key': apiKey },
+        body: formData
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.errors?.[0]?.title || `API error ${res.status}`);
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      document.getElementById('resultImg').src = url;
+      document.getElementById('resultImg').style.display = 'block';
+      document.getElementById('resultPlaceholder').style.display = 'none';
+
+      const dlBtn = document.getElementById('downloadBtn');
+      dlBtn.href = url;
+      dlBtn.style.display = 'inline-flex';
+
+      showStatus('success', '✓ Background removed! Download your image below.');
+    } catch (err) {
+      showStatus('error', '✗ ' + err.message);
+    } finally {
+      document.getElementById('removeBtn').disabled = false;
+    }
+  }
+
+  function resetTool() {
+    currentFile = null;
+    document.getElementById('fileInput').value = '';
+    document.getElementById('originalImg').src = '';
+    document.getElementById('resultImg').src = '';
+    document.getElementById('originalImg').style.display = 'none';
+    document.getElementById('resultImg').style.display = 'none';
+    document.getElementById('resultPlaceholder').style.display = 'block';
+    document.getElementById('previewGrid').style.display = 'none';
+    document.getElementById('removeBtn').disabled = true;
+    document.getElementById('resetBtn').disabled = true;
+    document.getElementById('downloadBtn').style.display = 'none';
+    hideStatus();
+  }
+
+  function showStatus(type, msg) {
+    const bar = document.getElementById('statusBar');
+    const spinner = document.getElementById('spinner');
+    bar.className = 'status-bar ' + type;
+    document.getElementById('statusText').textContent = msg;
+    spinner.style.display = type === 'loading' ? 'block' : 'none';
+  }
+
+  function hideStatus() {
+    document.getElementById('statusBar').className = 'status-bar';
+  }
+</script>
+</body>
+</html>
